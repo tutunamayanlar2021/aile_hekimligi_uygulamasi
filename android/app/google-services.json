@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "297968121277",
+    "project_id": "aile-hekimligi-72909",
+    "storage_bucket": "aile-hekimligi-72909.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297968121277:android:583fe0fd12142981c8ced4",
+        "android_client_info": {
+          "package_name": "com.example.aile_hekimligi_uygulamasi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297968121277-59fh8c40d0sspha2068c255r9jf9qk73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsBwlKr1RCfXu43G59mWmsNTFU3CjZZ3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297968121277-59fh8c40d0sspha2068c255r9jf9qk73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
