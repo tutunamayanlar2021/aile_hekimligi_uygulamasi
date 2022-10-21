@@ -13,7 +13,7 @@ class StyleConstants {
       TextStyle(fontSize: 25, color: ColorConstants.instance.blackBrown);
   final mTitle = TextStyle(
       fontSize: 20,
-      color: ColorConstants.instance.blackBrown,
+      color: ColorConstants.instance.black,
       fontWeight: FontWeight.bold);
   final mTitleBlack = TextStyle(
       fontSize: 20,

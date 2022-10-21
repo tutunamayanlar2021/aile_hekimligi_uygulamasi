@@ -1,4 +1,6 @@
 import 'package:aile_hekimligi_uygulamasi/service/firebase_service.dart';
+import 'package:aile_hekimligi_uygulamasi/view/home/home_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -19,9 +21,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+// Define a widget
+    Widget firstWidget;
+
+// Assign widget based on availability of currentUser
+    if (FirebaseAuth.instance.currentUser == null) {
+      firstWidget = const FirebaseService();
+    } else {
+      firstWidget = const HomeView();
+    }
+
     return MaterialApp(
       title: 'Material App',
-      home: FirebaseService(),
+      home: firstWidget,
     );
   }
 }

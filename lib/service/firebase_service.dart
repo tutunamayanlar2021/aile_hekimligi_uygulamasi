@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:aile_hekimligi_uygulamasi/view/login/forgot_password.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -34,85 +32,94 @@ class _FirebaseServiceState extends State<FirebaseService> {
     var pageWidth = MediaQuery.of(context).size.width;
     var pageHeight = MediaQuery.of(context).size.height;
 
+    /// other way there is no user logged.
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.black12, Colors.black87],
-              begin: Alignment.center,
-              end: Alignment.bottomCenter),
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: NetworkImage(
                   "https://previews.123rf.com/images/leoedition/leoedition1710/leoedition171000645/88767567-medical-background-medical-care-health-care-vector-medicine-illustration.jpg"),
-              fit: BoxFit.cover)),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: formKey,
-            child: Padding(
-              padding: EdgeInsets.all(pageWidth / 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "SING UP",
-                    style: StyleConstants().mTitle,
-                  ),
-                  SizedBox(
-                    height: pageHeight / 30,
-                  ),
-                  userNameTextField(),
-                  SizedBox(
-                    height: pageHeight / 50,
-                  ),
-                  userPasswordTextfield(),
-                  SizedBox(
-                    height: pageHeight / 50,
-                  ),
-                  SizedBox(
-                    width: pageWidth,
-                    height: pageHeight / 16,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: ColorConstants.instance.flower),
-                      onPressed: () {
-                        createUser();
-                      },
-                      child: const Text("SIGN UP"),
-                    ),
-                  ),
-                  SizedBox(
-                    height: pageHeight / 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Already a user?"),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            primary: Theme.of(context).scaffoldBackgroundColor),
-                        onPressed: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginView()));
-                          //login();
-                        },
-                        child: Text(
-                          "LOGIN",
-                          style: StyleConstants().sbTitle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              fit: BoxFit.cover),
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
               ),
-            )),
-      ),
-    );
+              width: pageWidth / 1.2,
+              height: pageHeight / 2,
+              child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: formKey,
+                  child: Padding(
+                    padding: EdgeInsets.all(pageWidth / 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "SING UP",
+                          style: StyleConstants().mTitle,
+                        ),
+                        SizedBox(
+                          height: pageHeight / 30,
+                        ),
+                        userNameTextField(),
+                        SizedBox(
+                          height: pageHeight / 50,
+                        ),
+                        userPasswordTextfield(),
+                        SizedBox(
+                          height: pageHeight / 50,
+                        ),
+                        SizedBox(
+                          width: pageWidth,
+                          height: pageHeight / 16,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                primary: ColorConstants.instance.flower),
+                            onPressed: () {
+                              createUser();
+                            },
+                            child: const Text("SIGN UP"),
+                          ),
+                        ),
+                        SizedBox(
+                          height: pageHeight / 50,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Already a user?"),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  primary: Theme.of(context)
+                                      .scaffoldBackgroundColor),
+                              onPressed: () async {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginView()));
+                                //login();
+                              },
+                              child: Text(
+                                "LOGIN",
+                                style: StyleConstants().sbTitle,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ),
+        ));
   }
 
   Future<void> createUser() async {
@@ -126,13 +133,12 @@ class _FirebaseServiceState extends State<FirebaseService> {
           .hasMatch(_email);
 
       if (!emailValid) {
-        showError("lütfen geçerli bir mail adresi giriniz");
+        showError("Please enter valid email and password!");
       }
 
       if (e.toString().contains(
           "The email address is already in use by another account.")) {
-        showError(
-            "E-posta adresi zaten başka bir hesap tarafından kullanılıyor.");
+        showError("Email address is already in use by another account.");
       }
       debugPrint(e.toString());
     }
@@ -145,27 +151,29 @@ class _FirebaseServiceState extends State<FirebaseService> {
       var userCredential = await auth.signInWithEmailAndPassword(
           email: _email, password: _password);
       debugPrint(userCredential.toString());
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomeView()));
+      if (mounted) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomeView()));
+      }
     } catch (e) {
       bool emailValid = RegExp(
               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
           .hasMatch(_email);
 
       if (!emailValid) {
-        showError("lütfen geçerli bir mail adresi giriniz");
+        showError("Please enter valid email");
       }
       debugPrint(e.toString());
       if (e.toString().contains("password is invalid")) {
-        showError("şifre yanlış");
+        showError("Wrong password!");
       }
       if (e.toString().contains("has not been initialized.")) {
-        showError("lütfen e mail ve şifrenizi giriniz");
+        showError("Please enter your e-mail and password!");
       }
 
       if (e.toString().contains("blocked")) {
         showError(
-            "Olağandışı etkinlik nedeniyle bu cihazdan gelen tüm istekleri engelledik. Daha sonra tekrar deneyin.");
+            "All requests from this device have been blocked due to Unusual activity. Try again later.");
       }
     }
   }
@@ -193,7 +201,9 @@ class _FirebaseServiceState extends State<FirebaseService> {
   TextFormField userPasswordTextfield() {
     return TextFormField(
       validator: (value) {
-        return (value ?? '').length > 5 ? null : 'şifre 6dan kucuk olamaz';
+        return (value ?? '').length > 5
+            ? null
+            : 'password cannot be less than 6 characters';
       },
       onChanged: (value) => setState(() {
         _password = value;
@@ -207,8 +217,9 @@ class _FirebaseServiceState extends State<FirebaseService> {
 
   TextFormField userNameTextField() {
     return TextFormField(
-      validator: (value) =>
-          (value ?? '').isNotEmpty ? null : 'email alanı boş bırakılamaz!',
+      validator: (value) => (value ?? '').isNotEmpty
+          ? null
+          : 'e-mail field cannot be left blank!',
       onChanged: (value) => setState(() {
         _email = value;
       }),

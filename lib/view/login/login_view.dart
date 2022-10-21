@@ -43,22 +43,37 @@ class _LoginViewState extends State<LoginView> {
     var pageHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          leading: BackButton(
-            color: Colors.black,
-          ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        leading: BackButton(
+          color: Colors.black,
         ),
-        body: Form(
+      ),
+      body: ListView(children: [
+        Form(
           autovalidateMode: AutovalidateMode.always,
           key: formKey,
           child: Padding(
-            padding: EdgeInsets.all(pageWidth / 30),
+            padding: EdgeInsets.all(pageWidth / 25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Center(
+                  child: Container(
+                    width: pageWidth / 2,
+                    height: pageHeight / 4,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/images.jpg"),
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: pageHeight / 20,
+                ),
                 Center(
                   child: Text(
                     "LOGIN",
@@ -78,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 SizedBox(
                   width: pageWidth,
-                  height: pageHeight / 16,
+                  height: pageHeight / 15,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 0, primary: ColorConstants.instance.flower),
@@ -111,7 +126,9 @@ class _LoginViewState extends State<LoginView> {
               ],
             ),
           ),
-        ));
+        ),
+      ]),
+    );
   }
 
   Future<void> login() async {
@@ -121,7 +138,7 @@ class _LoginViewState extends State<LoginView> {
       var userCredential = await auth.signInWithEmailAndPassword(
           email: _email, password: _password);
       debugPrint(userCredential.toString());
-      if (_email.isNotEmpty) {
+      if (mounted) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomeView()));
       }
@@ -131,19 +148,19 @@ class _LoginViewState extends State<LoginView> {
           .hasMatch(_email);
 
       if (!emailValid) {
-        showError("lütfen geçerli email ve password bilgisi giriniz");
+        showError("Please enter valid email and password!");
       }
 
       debugPrint(e.toString());
-      if (e.toString().contains("password is invalid")) {
-        showError("şifre yanlış");
+      if (e.toString().contains("Password is invalid")) {
+        showError("Wrong password");
       }
       if (e.toString().contains("has not been initialized.")) {
-        showError("lütfen e mail ve şifrenizi giriniz");
+        showError("Please enter your e-mail and password");
       }
       if (e.toString().contains("blocked")) {
         showError(
-            "Olağandışı etkinlik nedeniyle bu cihazdan gelen tüm istekleri engelledik. Daha sonra tekrar deneyin.");
+            "All requests from this device have been blocked due to Unusual activity. Try again later.");
       }
     }
   }
@@ -172,7 +189,9 @@ class _LoginViewState extends State<LoginView> {
     return TextFormField(
       controller: _passwordController,
       validator: (value) {
-        return (value ?? '').length > 5 ? null : 'şifre 6dan kucuk olamaz';
+        return (value ?? '').length > 5
+            ? null
+            : 'password cannot be less than 6 characters';
       },
       onChanged: (value) => setState(() {
         _password = value;
@@ -187,8 +206,9 @@ class _LoginViewState extends State<LoginView> {
   TextFormField userNameTextField() {
     return TextFormField(
       controller: _emailController,
-      validator: (value) =>
-          (value ?? '').isNotEmpty ? null : 'email alanı boş bırakılamaz!',
+      validator: (value) => (value ?? '').isNotEmpty
+          ? null
+          : 'e-mail field cannot be left blank!',
       onChanged: (value) => setState(() {
         _email = value;
       }),

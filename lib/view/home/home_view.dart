@@ -15,9 +15,6 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        leading: BackButton(
-          color: Colors.black,
-        ),
       ),
       body: Container(
         child: Center(child: Text("GİRİŞ BAŞARILI")),

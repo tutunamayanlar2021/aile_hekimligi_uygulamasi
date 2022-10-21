@@ -95,7 +95,7 @@ class _ForgotPageState extends State<ForgotPage> {
                       style: StyleConstants().sbTitle,
                     ))
               ],
-              title: const Text("Hata!"),
+              title: const Text("Error!"),
               // contentPadding: EdgeInsets.all(10),
               content: Text(message),
             ));
@@ -113,10 +113,10 @@ class _ForgotPageState extends State<ForgotPage> {
           .hasMatch(email);
 
       if (!emailValid) {
-        showError("lütfen geçerli bir mail adresi giriniz");
+        showError("Please enter valid email!");
       }
       if (EmailValidator.validate(email)) {
-        showError("No such user found");
+        showError("No such user found!");
       }
     }
   }
