@@ -1,17 +1,16 @@
-import 'package:aile_hekimligi_uygulamasi/view/doctor/doctor_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/color_constant.dart';
 import '../user/user_view.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -20,7 +19,10 @@ class _HomeViewState extends State<HomeView> {
       'Index 0: Home',
       style: optionStyle,
     ),
-    DoctorView(),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
     Text(
       'Index 2: School',
       style: optionStyle,
@@ -40,11 +42,8 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Hekimim"),
-        elevation: 0,
-        backgroundColor: ColorConstants.instance.flower,
+        title: const Text('BottomNavigationBar Sample'),
       ),
-      drawer: const NavBar(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -62,14 +61,9 @@ class _HomeViewState extends State<HomeView> {
             icon: Icon(Icons.school),
             label: 'School',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orangeAccent.shade100,
-        unselectedItemColor: Colors.black38,
+        selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
     );

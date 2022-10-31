@@ -18,6 +18,7 @@ class _FirebaseServiceState extends State<FirebaseService> {
   late FirebaseAuth auth;
   late String _email = "";
   late String _password = "";
+  late String _name = "";
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final GlobalKey<FormState> formKey = GlobalKey();
 
@@ -36,9 +37,11 @@ class _FirebaseServiceState extends State<FirebaseService> {
     return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage(
-                  "https://previews.123rf.com/images/leoedition/leoedition1710/leoedition171000645/88767567-medical-background-medical-care-health-care-vector-medicine-illustration.jpg"),
-              fit: BoxFit.cover),
+            image: AssetImage(
+              "assets/images/s.webp",
+            ),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -48,74 +51,80 @@ class _FirebaseServiceState extends State<FirebaseService> {
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
               ),
-              width: pageWidth / 1.2,
-              height: pageHeight / 2,
+              width: pageWidth / 1.3,
+              height: pageHeight / 1.8,
               child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: formKey,
                   child: Padding(
                     padding: EdgeInsets.all(pageWidth / 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "SING UP",
-                          style: StyleConstants().mTitle,
-                        ),
-                        SizedBox(
-                          height: pageHeight / 30,
-                        ),
-                        userNameTextField(),
-                        SizedBox(
-                          height: pageHeight / 50,
-                        ),
-                        userPasswordTextfield(),
-                        SizedBox(
-                          height: pageHeight / 50,
-                        ),
-                        SizedBox(
-                          width: pageWidth,
-                          height: pageHeight / 16,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                primary: ColorConstants.instance.flower),
-                            onPressed: () {
-                              createUser();
-                            },
-                            child: const Text("SIGN UP"),
+                    child: ListView(children: [
+                      Column(
+                        //crossAxisAlignment: CrossAxisAlignment.center,
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "SING UP",
+                            style: StyleConstants().mTitle,
                           ),
-                        ),
-                        SizedBox(
-                          height: pageHeight / 50,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Already a user?"),
-                            ElevatedButton(
+                          SizedBox(
+                            height: pageHeight / 30,
+                          ),
+                          userNameTextfield(),
+                          SizedBox(
+                            height: pageHeight / 50,
+                          ),
+                          userEmailTextField(),
+                          SizedBox(
+                            height: pageHeight / 50,
+                          ),
+                          userPasswordTextfield(),
+                          SizedBox(
+                            height: pageHeight / 50,
+                          ),
+                          SizedBox(
+                            width: pageWidth,
+                            height: pageHeight / 16,
+                            child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   elevation: 0,
-                                  primary: Theme.of(context)
-                                      .scaffoldBackgroundColor),
-                              onPressed: () async {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginView()));
-                                //login();
+                                  primary: ColorConstants.instance.flower),
+                              onPressed: () {
+                                createUser();
                               },
-                              child: Text(
-                                "LOGIN",
-                                style: StyleConstants().sbTitle,
-                              ),
+                              child: const Text("SIGN UP"),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                          SizedBox(
+                            height: pageHeight / 50,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Already a user?"),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    primary: Theme.of(context)
+                                        .scaffoldBackgroundColor),
+                                onPressed: () async {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginView()));
+                                  //login();
+                                },
+                                child: Text(
+                                  "LOGIN",
+                                  style: StyleConstants().sbTitle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ]),
                   )),
             ),
           ),
@@ -126,7 +135,12 @@ class _FirebaseServiceState extends State<FirebaseService> {
     try {
       var userCredential = await auth.createUserWithEmailAndPassword(
           email: _email, password: _password);
+      auth.currentUser!.updateDisplayName(_name);
       debugPrint(userCredential.toString());
+      if (mounted) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomeView()));
+      }
     } catch (e) {
       bool emailValid = RegExp(
               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -198,6 +212,23 @@ class _FirebaseServiceState extends State<FirebaseService> {
             ));
   }
 
+  TextFormField userNameTextfield() {
+    return TextFormField(
+      validator: (value) {
+        return (value ?? '').length > 5
+            ? null
+            : 'password cannot be less than 6 characters';
+      },
+      onChanged: (value) => setState(() {
+        _name = value;
+      }),
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Name',
+      ),
+    );
+  }
+
   TextFormField userPasswordTextfield() {
     return TextFormField(
       validator: (value) {
@@ -215,7 +246,7 @@ class _FirebaseServiceState extends State<FirebaseService> {
     );
   }
 
-  TextFormField userNameTextField() {
+  TextFormField userEmailTextField() {
     return TextFormField(
       validator: (value) => (value ?? '').isNotEmpty
           ? null
