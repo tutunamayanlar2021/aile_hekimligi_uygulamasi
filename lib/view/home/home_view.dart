@@ -1,6 +1,8 @@
+import 'package:aile_hekimligi_uygulamasi/view/appointment/appointment_view.dart';
 import 'package:aile_hekimligi_uygulamasi/view/doctor/doctor_view.dart';
+import 'package:aile_hekimligi_uygulamasi/view/news_view.dart';
 import 'package:flutter/material.dart';
-
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../constants/color_constant.dart';
 import '../user/user_view.dart';
 
@@ -13,23 +15,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    DoctorView(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
-  ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -38,6 +24,15 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    const TextStyle optionStyle =
+        TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+    List<Widget> _widgetOptions = <Widget>[
+      const NewsView(),
+      const DoctorView(),
+      ApponintmentView(),
+      const Text("Hekimim"),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Hekimim"),
@@ -45,33 +40,37 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: ColorConstants.instance.flower,
       ),
       drawer: const NavBar(),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      body: _widgetOptions.elementAt(_selectedIndex),
+      bottomNavigationBar: bottomNavBarWidget(),
+    );
+  }
+
+  BottomNavigationBar bottomNavBarWidget() {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.people),
+          label: 'Doctor',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.calendar_month,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orangeAccent.shade100,
-        unselectedItemColor: Colors.black38,
-        onTap: _onItemTapped,
-      ),
+          label: 'Appointment',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.vaccines),
+          label: 'Vaccine',
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Colors.deepOrange.withOpacity(0.5),
+      unselectedItemColor: Colors.black38,
+      onTap: _onItemTapped,
     );
   }
 }

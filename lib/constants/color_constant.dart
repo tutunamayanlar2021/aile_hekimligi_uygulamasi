@@ -13,4 +13,5 @@ class ColorConstants {
   final skin = const Color(0xffF0B7B4);
   final coffeBrown = const Color(0xffA85832);
   final blackSkin = const Color(0xffBD908E);
+  final red = Color.fromARGB(255, 167, 18, 11);
 }

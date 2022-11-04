@@ -27,4 +27,12 @@ class StyleConstants {
       fontSize: 13,
       fontWeight: FontWeight.bold,
       color: ColorConstants.instance.blackBrown);
+  final sHeaderBrown = TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: ColorConstants.instance.blackSkin);
+  final sHeaderBrownA = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: ColorConstants.instance.blackSkin);
 }

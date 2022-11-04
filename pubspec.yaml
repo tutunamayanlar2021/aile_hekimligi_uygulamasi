@@ -38,6 +38,13 @@ dependencies:
   firebase_auth: ^3.11.2
   email_validator: ^2.1.16
   collapsible_sidebar:
+  dio: ^4.0.4
+  provider: ^6.0.2
+  cached_network_image: ^3.2.0
+  http: ^0.13.4
+  url_launcher: ^6.0.20
+    # format date time
+  intl:
 
 dev_dependencies:
   flutter_test:
