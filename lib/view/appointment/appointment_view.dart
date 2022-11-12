@@ -1,6 +1,7 @@
 import 'package:aile_hekimligi_uygulamasi/constants/color_constant.dart';
 import 'package:aile_hekimligi_uygulamasi/constants/style_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class ApponintmentView extends StatefulWidget {
   const ApponintmentView({super.key});
@@ -10,22 +11,24 @@ class ApponintmentView extends StatefulWidget {
 }
 
 class _ApponintmentViewState extends State<ApponintmentView> {
-  void _showDatePicker() {
+  /*void _showDatePicker() {
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime(2022, DateTime.now().day),
+            firstDate: DateTime(2020, DateTime.now().day),
             lastDate: DateTime(2050))
         .then((value) {
       setState(() {
         _dateTime = value!;
       });
     });
-  }
+  }*/
 
   DateTime _dateTime = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
+    ColorConstants.instance;
     double displayWidth = MediaQuery.of(context).size.width;
     double displayHeight = MediaQuery.of(context).size.height;
     return Center(
@@ -45,63 +48,115 @@ class _ApponintmentViewState extends State<ApponintmentView> {
           child: ListView(
             ///shrinkWrap: true,
             children: [
-              ExpansionTile(
-                //iconColor: Colors.red,
-                collapsedBackgroundColor:
-                    ColorConstants.instance.skin.withOpacity(.2),
-                backgroundColor: ColorConstants.instance.skin.withOpacity(.2),
-                leading: Icon(
-                  Icons.close_sharp,
-                  color: ColorConstants.instance.red,
-                  size: 30,
-                ),
-                title: Text(
+              pastAppointmentWidget(
+                  displayWidth,
+                  Icons.event_available,
+                  ColorConstants.instance.flower,
+                  'Current Appointment',
+                  'Sakarya Family Health Center',
+                  'Dr.Sevgi Yılmaz',
+                  '01.09.2022 ',
+                  ColorConstants.instance.flower.withOpacity(.2),
+                  "15:00",
+                  true),
+              pastAppointmentWidget(
+                  displayWidth,
+                  Icons.close,
+                  ColorConstants.instance.red,
                   'Past Appointment',
-                  style: StyleConstants().sHeaderBrownA,
-                ),
-                trailing: Icon(Icons.arrow_drop_down),
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.all(displayWidth * .05),
-                    height: displayWidth * .500,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(.1),
-                              blurRadius: 30,
-                              offset: const Offset(0, 10)),
-                        ],
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: Icon(
-                            Icons.home,
-                            color: ColorConstants.instance.flower,
+                  'Sakarya Family Health Center',
+                  'Dr.Ali Yıldız',
+                  '14.07.2021 ',
+                  ColorConstants.instance.skin.withOpacity(.2),
+                  '11:00',
+                  false),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: displayHeight / 20,
+                  ),
+                  Text(
+                    " New Appointment",
+                    style: StyleConstants().sHeaderBrown,
+                  ),
+                  SizedBox(
+                    height: displayHeight / 40,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: displayWidth,
+                      height: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                                color: ColorConstants.instance.flower
+                                    .withOpacity(.1),
+                                blurRadius: 30,
+                                offset: const Offset(0, 10))
+                          ]),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(
+                            "assets/images/mydocs.jpg",
                           ),
-                          title: Text("Sakarya Family Health Center"),
-                          //  trailing: Text("Sakarya Family Health Center"),
                         ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.person,
-                            color: ColorConstants.instance.flower,
+                        trailing: MaterialButton(
+                          elevation: 0,
+                          color: Colors.white,
+                          onPressed: (() {
+                            //  selectedTimeRTL;
+                          }),
+                          child: Text(
+                            "Choose Day",
+                            style: StyleConstants().sbTitle,
                           ),
-                          title: Text("Dr.Sevgi Yılmaz"),
-                          //  trailing: Text("Sakarya Family Health Center"),
                         ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.query_builder_outlined,
-                            color: ColorConstants.instance.flower,
+                        title: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "Dr.Derya Sarı",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black45),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Nearest date",
+                                style: StyleConstants().sbTitle,
+                              ),
+                              SizedBox(),
+                              Text("12.12.2022"),
+                            ],
                           ),
-                          title: Text("14.09.2021"),
-                          //  trailing: Text("Sakarya Family Health Center"),
                         ),
-                      ],
+                      ),
                     ),
                   ),
+                  CalendarDatePicker(
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2020, DateTime.now().day),
+                    lastDate: DateTime(2050),
+                    onDateChanged: ((value) => {
+                          showTimePicker(
+                                  context: context, initialTime: selectedTime)
+                              .then((value) {
+                            setState(() {
+                              selectedTime = value!;
+                            });
+                          })
+                        }),
+                  )
+                  //   Text("${_dateTime.day}.${_dateTime.month}.${_dateTime.year}"),
                 ],
               ),
             ],
@@ -109,5 +164,97 @@ class _ApponintmentViewState extends State<ApponintmentView> {
         )
       ],
     ));
+  }
+
+  ExpansionTile pastAppointmentWidget(
+      double displayWidth,
+      IconData icon,
+      Color color,
+      String headerTitle,
+      String centerTitle,
+      String doctorTitle,
+      String date,
+      Color backgroundColor,
+      String hour,
+      bool isOnline) {
+    return ExpansionTile(
+      // collapsedIconColor: Colors.black,
+      iconColor: Colors.black,
+      //iconColor: Colors.red,
+      collapsedBackgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
+      leading: Icon(icon, color: color, size: 30),
+      title: Text(
+        headerTitle,
+        style: StyleConstants().sHeaderBrownA,
+      ),
+      trailing: const Icon(Icons.arrow_drop_down),
+      children: <Widget>[
+        appointmentDetailContainer(
+            displayWidth, centerTitle, doctorTitle, date, hour, isOnline),
+      ],
+    );
+  }
+
+  Container appointmentDetailContainer(double displayWidth, String centerTitle,
+      String doctorTitle, String date, String hour, bool isOnline) {
+    return Container(
+      margin: EdgeInsets.all(displayWidth * .05),
+      height: displayWidth * .600,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(.1),
+                blurRadius: 30,
+                offset: const Offset(0, 10)),
+          ],
+          borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        children: [
+          ListTile(
+            leading: Icon(
+              Icons.home,
+              color: ColorConstants.instance.flower,
+            ),
+            title: Text(centerTitle),
+            //  trailing: Text("Sakarya Family Health Center"),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.person,
+              color: ColorConstants.instance.flower,
+            ),
+            title: Text(doctorTitle),
+            //  trailing: Text("Sakarya Family Health Center"),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.date_range,
+              color: ColorConstants.instance.flower,
+            ),
+            title: Text(date),
+            //  trailing: Text("Sakarya Family Health Center"),
+          ),
+          ListTile(
+              leading: Icon(
+                Icons.query_builder_outlined,
+                color: ColorConstants.instance.flower,
+              ),
+              title: Text(hour),
+              trailing: isOnline
+                  ? Column(
+                      children: [
+                        Icon(
+                          Icons.wifi,
+                          color: ColorConstants.instance.flower,
+                        ),
+                        Text("Online")
+                      ],
+                    )
+                  : null),
+        ],
+      ),
+    );
   }
 }

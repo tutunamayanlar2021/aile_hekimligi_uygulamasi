@@ -49,6 +49,9 @@ class _NewsViewState extends State<NewsView> {
             } else {
               List<Articles> newsArticle = snapshot.data!;
               return ListView.builder(
+                  //shrinkWrap: true,
+                  //physics: const BouncingScrollPhysics(),
+                  // scrollDirection: Axis.horizontal,
                   itemCount: newsArticle.length,
                   itemBuilder: (context, index) {
                     return Padding(

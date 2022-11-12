@@ -1,4 +1,3 @@
-import 'package:aile_hekimligi_uygulamasi/constants/color_constant.dart';
 import 'package:aile_hekimligi_uygulamasi/service/firebase_service.dart';
 import 'package:aile_hekimligi_uygulamasi/view/home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
