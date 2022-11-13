@@ -89,14 +89,16 @@ class _ApponintmentViewState extends State<ApponintmentView> {
                       width: displayWidth,
                       height: 100,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.white,
+                          // borderRadius: BorderRadius.circular(30),
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           boxShadow: [
                             BoxShadow(
-                                color: ColorConstants.instance.flower
-                                    .withOpacity(.1),
-                                blurRadius: 30,
-                                offset: const Offset(0, 10))
+                              color: ColorConstants.instance.flower
+                                  .withOpacity(.1),
+                              //  blurRadius: 30,
+                              spreadRadius: 1,
+                              offset: const Offset(10, -1),
+                            )
                           ]),
                       child: ListTile(
                         leading: CircleAvatar(
@@ -104,7 +106,7 @@ class _ApponintmentViewState extends State<ApponintmentView> {
                             "assets/images/mydocs.jpg",
                           ),
                         ),
-                        trailing: MaterialButton(
+                        /* trailing: MaterialButton(
                           elevation: 0,
                           color: Colors.white,
                           onPressed: (() {
@@ -114,12 +116,12 @@ class _ApponintmentViewState extends State<ApponintmentView> {
                             "Choose Day",
                             style: StyleConstants().sbTitle,
                           ),
-                        ),
+                        ),*/
                         title: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 "Dr.Derya Sarı",
@@ -130,12 +132,35 @@ class _ApponintmentViewState extends State<ApponintmentView> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                "Nearest date",
-                                style: StyleConstants().sbTitle,
+                              Row(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Nearest date",
+                                        style: StyleConstants().sbTitle,
+                                      ),
+                                      //SizedBox(),
+                                      Text(
+                                          "${_dateTime.day + 1}.${_dateTime.month}.${_dateTime.year} "),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "furthest date",
+                                        style: StyleConstants().sbTitle,
+                                      ),
+                                      Text(
+                                          "${_dateTime.day + 15}.${_dateTime.month}.${_dateTime.year} "),
+                                    ],
+                                  ),
+                                ],
                               ),
                               SizedBox(),
-                              Text("12.12.2022"),
                             ],
                           ),
                         ),
@@ -147,15 +172,20 @@ class _ApponintmentViewState extends State<ApponintmentView> {
                     firstDate: DateTime(2020, DateTime.now().day),
                     lastDate: DateTime(2050),
                     onDateChanged: ((value) => {
+                          _dateTime = value,
                           showTimePicker(
                                   context: context, initialTime: selectedTime)
                               .then((value) {
                             setState(() {
                               selectedTime = value!;
+
+                              showError(
+                                  "Do you confirm the appointment on ${_dateTime.day}.${_dateTime.month}.${_dateTime.year}  ${selectedTime.toString().replaceAll("TimeOfDay", "")} ? ");
                             });
                           })
                         }),
-                  )
+                  ),
+
                   //   Text("${_dateTime.day}.${_dateTime.month}.${_dateTime.year}"),
                 ],
               ),
@@ -164,6 +194,36 @@ class _ApponintmentViewState extends State<ApponintmentView> {
         )
       ],
     ));
+  }
+
+  Future<dynamic> showError(String message) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Appointment successfully made")));
+                    },
+                    child: Text(
+                      "Yes",
+                      style: StyleConstants().sbTitle,
+                    )),
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: StyleConstants().sbTitle,
+                    ))
+              ],
+              title: const Text("Message"),
+              // contentPadding: EdgeInsets.all(10),
+              content: Text(message),
+            ));
   }
 
   ExpansionTile pastAppointmentWidget(

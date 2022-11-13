@@ -4,7 +4,7 @@ import 'package:aile_hekimligi_uygulamasi/view/news_view.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../constants/color_constant.dart';
-import '../user/user_view.dart';
+import '../user/navbar_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -29,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
     List<Widget> _widgetOptions = <Widget>[
       const NewsView(),
       const DoctorView(),
-      ApponintmentView(),
+      const ApponintmentView(),
       const Text("Hekimim"),
     ];
 

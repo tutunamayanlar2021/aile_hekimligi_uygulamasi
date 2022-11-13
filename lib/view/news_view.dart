@@ -1,5 +1,6 @@
 import 'package:aile_hekimligi_uygulamasi/constants/color_constant.dart';
 import 'package:aile_hekimligi_uygulamasi/constants/style_constant.dart';
+import 'package:aile_hekimligi_uygulamasi/view/home/user_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../model/news_response.dart';
@@ -19,10 +20,11 @@ class _NewsViewState extends State<NewsView> {
     double displayHeight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          UserView(),
           Container(
-            height: displayHeight / 2.4,
+            height: displayHeight / 15,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: displayWidth / 30),
