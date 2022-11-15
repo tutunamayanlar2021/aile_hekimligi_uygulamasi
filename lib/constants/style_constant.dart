@@ -35,4 +35,6 @@ class StyleConstants {
       fontSize: 18,
       fontWeight: FontWeight.bold,
       color: ColorConstants.instance.blackSkin);
+  final sHeaderBlack = TextStyle(
+      fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black38);
 }

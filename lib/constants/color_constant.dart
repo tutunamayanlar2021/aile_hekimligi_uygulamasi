@@ -14,4 +14,5 @@ class ColorConstants {
   final coffeBrown = const Color(0xffA85832);
   final blackSkin = const Color(0xffBD908E);
   final red = Color.fromARGB(255, 167, 18, 11);
+  final white = Color.fromARGB(255, 255, 255, 255);
 }

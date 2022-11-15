@@ -95,9 +95,9 @@ class _ApponintmentViewState extends State<ApponintmentView> {
                             BoxShadow(
                               color: ColorConstants.instance.flower
                                   .withOpacity(.1),
-                              //  blurRadius: 30,
+                              //blurRadius: 10,
                               spreadRadius: 1,
-                              offset: const Offset(10, -1),
+                              offset: const Offset(2, -1),
                             )
                           ]),
                       child: ListTile(

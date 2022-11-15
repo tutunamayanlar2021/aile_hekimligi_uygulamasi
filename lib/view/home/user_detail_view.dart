@@ -15,8 +15,6 @@ class UserView extends StatefulWidget {
 
 class _UserViewState extends State<UserView> {
   late FirebaseAuth auth;
-  late String _email = "";
-  late String _password = "";
 
   @override
   void initState() {

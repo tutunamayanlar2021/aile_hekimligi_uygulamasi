@@ -1,6 +1,7 @@
 import 'package:aile_hekimligi_uygulamasi/view/appointment/appointment_view.dart';
 import 'package:aile_hekimligi_uygulamasi/view/doctor/doctor_view.dart';
 import 'package:aile_hekimligi_uygulamasi/view/news_view.dart';
+import 'package:aile_hekimligi_uygulamasi/view/vaccine/vaccine_view.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../constants/color_constant.dart';
@@ -30,7 +31,7 @@ class _HomeViewState extends State<HomeView> {
       const NewsView(),
       const DoctorView(),
       const ApponintmentView(),
-      const Text("Hekimim"),
+      const Vaccine(),
     ];
 
     return Scaffold(
