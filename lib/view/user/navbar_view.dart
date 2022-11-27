@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:aile_hekimligi_uygulamasi/constants/color_constant.dart';
 import 'package:aile_hekimligi_uygulamasi/service/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/style_constant.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -60,12 +65,63 @@ class _NavBarState extends State<NavBar> {
             ),
             title: Text("Exit"),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FirebaseService()));
+              showExitPopup(context);
+              /* Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FirebaseService()));*/
             },
           ),
         ],
       ),
     );
+  }
+
+  Future<bool> showExitPopup(context) async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Container(
+              height: 90,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Do you want to exit?"),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            print('yes selected');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FirebaseService()));
+                          },
+                          child: Text("Yes"),
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.white),
+                        ),
+                      ),
+                      SizedBox(width: 15),
+                      Expanded(
+                          child: ElevatedButton(
+                        onPressed: () {
+                          print('no selected');
+                          Navigator.of(context).pop();
+                        },
+                        child:
+                            Text("No", style: TextStyle(color: Colors.black)),
+                        style: ElevatedButton.styleFrom(
+                          primary: ColorConstants.instance.flower,
+                        ),
+                      ))
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
