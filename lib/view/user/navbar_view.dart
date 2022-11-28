@@ -75,7 +75,7 @@ class _NavBarState extends State<NavBar> {
     );
   }
 
-  Future<bool> showExitPopup(context) async {
+  Future showExitPopup(context) async {
     return await showDialog(
         context: context,
         builder: (BuildContext context) {

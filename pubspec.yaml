@@ -43,6 +43,7 @@ dependencies:
   cached_network_image: ^3.2.0
   http: ^0.13.4
   url_launcher: ^6.0.20
+  percent_indicator: ^4.2.2
     # format date time
   intl:
 
