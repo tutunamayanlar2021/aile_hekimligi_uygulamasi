@@ -155,7 +155,7 @@ class _ApponintmentViewState extends State<ApponintmentView> {
                                         style: StyleConstants().sbTitle,
                                       ),
                                       Text(
-                                          "${_dateTime.day + 15}.${_dateTime.month}.${_dateTime.year} "),
+                                          "${_dateTime.add(Duration(days: 15 + _dateTime.day)).day}.${_dateTime.month.toInt() < 15 ? _dateTime.month : _dateTime.month + 1}.${_dateTime.year} "),
                                     ],
                                   ),
                                 ],

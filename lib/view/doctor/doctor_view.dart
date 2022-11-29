@@ -1,7 +1,6 @@
 import 'package:aile_hekimligi_uygulamasi/constants/color_constant.dart';
 import 'package:aile_hekimligi_uygulamasi/constants/style_constant.dart';
 import 'package:aile_hekimligi_uygulamasi/view/home/home_view.dart';
-import 'package:aile_hekimligi_uygulamasi/view/score.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
