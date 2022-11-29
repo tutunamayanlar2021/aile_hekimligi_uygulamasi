@@ -102,7 +102,7 @@ class _FirebaseServiceState extends State<FirebaseService> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text("Already a user?"),
-                              ElevatedButton(
+                              /*ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     elevation: 0,
                                     primary: Theme.of(context)
@@ -119,7 +119,21 @@ class _FirebaseServiceState extends State<FirebaseService> {
                                   "LOGIN",
                                   style: StyleConstants().sbTitle,
                                 ),
-                              ),
+                              ),*/
+                              MaterialButton(
+                                onPressed: () async {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginView()));
+                                  //login();
+                                },
+                                child: Text(
+                                  "LOGIN",
+                                  style: StyleConstants().sbTitle,
+                                ),
+                              )
                             ],
                           ),
                         ],

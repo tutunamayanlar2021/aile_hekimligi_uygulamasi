@@ -152,7 +152,10 @@ class _LoginViewState extends State<LoginView> {
       }
 
       debugPrint(e.toString());
-      if (e.toString().contains("Password is invalid")) {
+      /* if (e.toString().contains("The password is invalid or the user does not have a password")) {
+        showError("Wrong password");
+      }*/
+      if (e.toString().contains("password is invalid")) {
         showError("Wrong password");
       }
       if (e.toString().contains("has not been initialized.")) {
