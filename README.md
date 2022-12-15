@@ -1,16 +1,7 @@
 # aile_hekimligi_uygulamasi
 
-A new Flutter project.
 
-## Getting Started
+## Uygulamanın videosu
 
-This project is a starting point for a Flutter application.
+https://user-images.githubusercontent.com/63172521/207857969-347ae5d2-cbd8-4c9b-94c0-781daf478315.mp4
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
