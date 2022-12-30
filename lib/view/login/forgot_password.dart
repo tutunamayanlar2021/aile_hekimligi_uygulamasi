@@ -104,7 +104,7 @@ class _ForgotPageState extends State<ForgotPage> {
   Future resetPassword() async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      Navigator.of(context).popUntil((route) => route.isFirst);
+
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Password Reset Email Sent")));
     } catch (e) {

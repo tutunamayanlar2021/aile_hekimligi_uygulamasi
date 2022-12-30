@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
         title: 'Material App',
+        debugShowCheckedModeBanner: false,
         home: firstWidget,
         theme: ThemeData(
           primarySwatch: Colors.orange,
